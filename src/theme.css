@@ -1,0 +1,12 @@
+:root {
+    --primary-dark: #0c0032;
+    --primary-medium-dark: #301288;
+    --primary-medium: #240090;
+    --primary-light: #3500d3;
+    --neutral-dark: #282828;
+    --text-light: #ffffff;
+    --text-secondary: #d1d1d1;
+    --background-light: #f5f5f5;
+    --shadow: rgba(12, 0, 50, 0.15);
+    --accent: rgb(0, 238, 255);
+  }

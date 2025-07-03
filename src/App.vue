@@ -1,6 +1,6 @@
 <script setup>
-import AppHeader from './components/AppHeader.vue'
-import LessonView from './components/LessonView.vue'
+import AppHeader from './components/AppHeader.vue';
+import LessonView from './components/LessonView.vue';
 </script>
 
 <template>

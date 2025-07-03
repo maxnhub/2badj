@@ -1,5 +1,5 @@
 <script setup>
-import { ref, computed } from 'vue'
+import { ref, computed } from 'vue';
 
 const props = defineProps({
   images: {
@@ -7,36 +7,57 @@ const props = defineProps({
     default: () => [],
     validator: value => value.every(img => img.src && img.alt)
   }
-})
+});
 
-const activeImageIndex = ref(null)
-const showModal = ref(false)
+const activeImageIndex = ref(0);
+const showModal = ref(false);
+const touchStartX = ref(0);
+const touchEndX = ref(0);
 
-const hasImages = computed(() => props.images?.length > 0)
+const hasImages = computed(() => props.images?.length > 0);
 
 const openModal = (index) => {
-  activeImageIndex.value = index
-  showModal.value = true
-  document.body.style.overflow = 'hidden'
-}
+  if (index >= 0 && index < props.images.length) {
+    activeImageIndex.value = index;
+    showModal.value = true;
+    document.body.style.overflow = 'hidden';
+  }
+};
 
 const closeModal = () => {
-  showModal.value = false
-  activeImageIndex.value = null
-  document.body.style.overflow = ''
-}
+  showModal.value = false;
+  activeImageIndex.value = 0;
+  document.body.style.overflow = '';
+};
 
 const navigate = (direction) => {
-  const newIndex = activeImageIndex.value + direction
+  const newIndex = activeImageIndex.value + direction;
   if (newIndex >= 0 && newIndex < props.images.length) {
-    activeImageIndex.value = newIndex
+    activeImageIndex.value = newIndex;
   }
-}
+};
+
+const handleTouchStart = (e) => {
+  touchStartX.value = e.changedTouches[0].screenX;
+};
+
+const handleTouchEnd = (e) => {
+  touchEndX.value = e.changedTouches[0].screenX;
+  handleSwipe();
+};
+
+const handleSwipe = () => {
+  if (touchStartX.value - touchEndX.value > 50) {
+    navigate(1);
+  }
+  if (touchEndX.value - touchStartX.value > 50) {
+    navigate(-1);
+  }
+};
 </script>
 
 <template>
   <div v-if="hasImages" class="image-gallery">
-    <!-- Отображаем все изображения как кликабельные миниатюры -->
     <div 
       v-for="(image, index) in images" 
       :key="index"
@@ -50,15 +71,22 @@ const navigate = (direction) => {
       >
     </div>
 
-    <!-- Модальное окно для просмотра изображения -->
-    <div v-if="showModal" class="image-modal" @click.self="closeModal">
+    <div 
+      v-if="showModal" 
+      class="image-modal" 
+      @click.self="closeModal"
+      @touchstart="handleTouchStart"
+      @touchend="handleTouchEnd"
+    >
       <div class="modal-content">
-        <img 
-          :src="images[activeImageIndex].src" 
-          :alt="images[activeImageIndex].alt"
-        >
+        <transition name="slide" mode="out-in">
+          <img 
+            :key="activeImageIndex"
+            :src="images[activeImageIndex]?.src" 
+            :alt="images[activeImageIndex]?.alt"
+          >
+        </transition>
         
-        <!-- Навигационные кнопки -->
         <button 
           v-if="activeImageIndex > 0"
           class="nav-btn prev-btn"
@@ -79,8 +107,7 @@ const navigate = (direction) => {
           ×
         </button>
         
-        <!-- Индикатор текущего изображения -->
-        <div class="image-counter">
+        <div class="image-counter" v-if="images.length > 1">
           {{ activeImageIndex + 1 }} / {{ images.length }}
         </div>
       </div>
@@ -146,7 +173,7 @@ const navigate = (direction) => {
   right: 20px;
   background: none;
   border: none;
-  color: white;
+  color: var(--text-light);
   font-size: 40px;
   cursor: pointer;
   padding: 0 15px;
@@ -154,7 +181,7 @@ const navigate = (direction) => {
 }
 
 .close-btn:hover {
-  color: #ccc;
+  color: var(--text-secondary);
 }
 
 .nav-btn {
@@ -163,7 +190,7 @@ const navigate = (direction) => {
   transform: translateY(-50%);
   background: rgba(0, 0, 0, 0.5);
   border: none;
-  color: white;
+  color: var(--text-light);
   font-size: 40px;
   width: 60px;
   height: 60px;
@@ -192,10 +219,25 @@ const navigate = (direction) => {
   bottom: 20px;
   left: 50%;
   transform: translateX(-50%);
-  color: white;
+  color: var(--text-light);
   background: rgba(0, 0, 0, 0.5);
   padding: 5px 15px;
   border-radius: 20px;
   font-size: 14px;
+}
+
+.slide-enter-active,
+.slide-leave-active {
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.slide-enter-from {
+  transform: translateX(100%);
+  opacity: 0;
+}
+
+.slide-leave-to {
+  transform: translateX(-100%);
+  opacity: 0;
 }
 </style>

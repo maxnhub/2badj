@@ -1,18 +1,18 @@
 <script setup>
-import { useLessonsStore } from '../stores/lessons'
-import { ref } from 'vue'
-import UiTypography from './UiKit/UiTypography.vue'
+import { useLessonsStore } from '../stores/lessons';
+import { ref } from 'vue';
+import UiTypography from './UiKit/UiTypography.vue';
 
-const store = useLessonsStore()
-const openChapters = ref([])
+const store = useLessonsStore();
+const openChapters = ref([]);
 
 const toggleChapter = (chapterId) => {
   if (openChapters.value.includes(chapterId)) {
-    openChapters.value = openChapters.value.filter(id => id !== chapterId)
+    openChapters.value = openChapters.value.filter(id => id !== chapterId);
   } else {
-    openChapters.value.push(chapterId)
+    openChapters.value.push(chapterId);
   }
-}
+};
 </script>
 
 <template>
@@ -25,25 +25,28 @@ const toggleChapter = (chapterId) => {
   <div class="menu-overlay" :class="{ open: store.isMenuOpen }" @click="store.toggleMenu">
     <div class="menu-content" @click.stop>
       <UiTypography variant="h2">Lessons</UiTypography>
-      <div v-for="chapter in store.chapters" :key="chapter.id" class="chapter">
-        <UiTypography 
-          variant="h3" 
-          class="chapter-title" 
-          @click="toggleChapter(chapter.id)"
-        >
-          {{ chapter.title }}
-        </UiTypography>
-        <ul v-if="openChapters.includes(chapter.id)">
-          <li 
-            v-for="lesson in chapter.lessons" 
-            :key="lesson.id" 
-            @click="store.setLesson(chapter.id, lesson.id)"
-            :class="{ active: store.currentChapterId === chapter.id && store.currentLessonId === lesson.id }"
+      <div v-if="store.chapters.length > 0" class="chapters">
+        <div v-for="chapter in store.chapters" :key="chapter.id" class="chapter">
+          <UiTypography 
+            variant="h3" 
+            class="chapter-title" 
+            @click="toggleChapter(chapter.id)"
           >
-            {{ lesson.title }}
-          </li>
-        </ul>
+            {{ chapter.title }}
+          </UiTypography>
+          <ul v-if="openChapters.includes(chapter.id) && chapter.Lessons">
+            <li 
+              v-for="lesson in chapter.Lessons" 
+              :key="lesson.id" 
+              @click="store.setLesson(chapter.id, lesson.id)"
+              :class="{ active: store.currentChapterId === chapter.id && store.currentLessonId === lesson.id }"
+            >
+              {{ lesson.title }}
+            </li>
+          </ul>
+        </div>
       </div>
+      <UiTypography v-else variant="body">No lessons available</UiTypography>
     </div>
   </div>
 </template>
@@ -101,6 +104,10 @@ const toggleChapter = (chapterId) => {
 
 .menu-overlay.open .menu-content {
   transform: translateX(0);
+}
+
+.chapters {
+  margin-top: 20px;
 }
 
 .chapter {

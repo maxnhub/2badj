@@ -1,99 +1,118 @@
 <script setup>
-import { useLessonsStore } from '../stores/lessons'
-import UiButton from './UiKit/UiButton.vue'
-import UiTypography from './UiKit/UiTypography.vue'
-import { ref, onMounted, watch, computed } from 'vue'
+import { useLessonsStore } from '../stores/lessons';
+import UiButton from './UiKit/UiButton.vue';
+import UiTypography from './UiKit/UiTypography.vue';
+import { ref, onMounted, watch, computed } from 'vue';
 
-const store = useLessonsStore()
-const modalImages = ref([])
-const showImageModal = ref(false)
-const currentImageIndex = ref(0)
-const touchStartX = ref(0)
-const touchEndX = ref(0)
+const store = useLessonsStore();
+const modalImages = ref([]);
+const showImageModal = ref(false);
+const currentImageIndex = ref(0);
+const touchStartX = ref(0);
+const touchEndX = ref(0);
+const isLoading = ref(true);
 
-// Calculate the current lesson's index within its chapter (1-based)
 const currentLessonIndex = computed(() => {
-  const chapter = store.currentChapter
-  const lessonIndex = chapter?.lessons.findIndex(lesson => lesson.id === store.currentLessonId)
-  return lessonIndex !== -1 ? lessonIndex + 1 : 1
-})
+  const chapter = store.currentChapter;
+  const lessonIndex = chapter?.Lessons?.findIndex(lesson => lesson.id === store.currentLessonId);
+  return lessonIndex !== -1 ? lessonIndex + 1 : 1;
+});
 
 const extractImagesFromContent = () => {
-  const parser = new DOMParser()
-  const doc = parser.parseFromString(store.currentLesson.content, 'text/html')
+  if (!store.currentLesson?.content) {
+    modalImages.value = [];
+    return;
+  }
+  const parser = new DOMParser();
+  const doc = parser.parseFromString(store.currentLesson.content, 'text/html');
   const images = Array.from(doc.querySelectorAll('img'))
     .filter(img => img.src && !img.src.startsWith('data:'))
     .map(img => ({
       src: img.src,
-      alt: img.alt || 'Изображение урока'
-    }))
-  modalImages.value = images
-}
+      alt: img.alt || 'Изображение урока',
+    }));
+  modalImages.value = images;
+};
 
 const openImageModal = (index) => {
-  currentImageIndex.value = index
-  showImageModal.value = true
-  document.body.style.overflow = 'hidden'
-}
+  if (index >= 0 && index < modalImages.value.length) {
+    currentImageIndex.value = index;
+    showImageModal.value = true;
+    document.body.style.overflow = 'hidden';
+  }
+};
 
 const closeImageModal = () => {
-  showImageModal.value = false
-  document.body.style.overflow = ''
-}
+  showImageModal.value = false;
+  currentImageIndex.value = 0;
+  document.body.style.overflow = '';
+};
 
 const navigateImage = (direction) => {
-  const newIndex = currentImageIndex.value + direction
+  const newIndex = currentImageIndex.value + direction;
   if (newIndex >= 0 && newIndex < modalImages.value.length) {
-    currentImageIndex.value = newIndex
+    currentImageIndex.value = newIndex;
   }
-}
+};
 
 const handleImageClick = (e) => {
   if (e.target.tagName === 'IMG' && e.target.src && !e.target.src.startsWith('data:')) {
     const index = Array.from(document.querySelectorAll('.lesson-content img'))
       .filter(img => img.src && !img.src.startsWith('data:'))
-      .findIndex(img => img === e.target)
+      .findIndex(img => img === e.target);
     if (index !== -1) {
-      openImageModal(index)
+      openImageModal(index);
     }
   }
-}
+};
 
 const handleTouchStart = (e) => {
-  touchStartX.value = e.changedTouches[0].screenX
-}
+  touchStartX.value = e.changedTouches[0].screenX;
+};
 
 const handleTouchEnd = (e) => {
-  touchEndX.value = e.changedTouches[0].screenX
-  handleSwipe()
-}
+  touchEndX.value = e.changedTouches[0].screenX;
+  handleSwipe();
+};
 
 const handleSwipe = () => {
   if (touchStartX.value - touchEndX.value > 50) {
-    navigateImage(1)
+    navigateImage(1);
   }
   if (touchEndX.value - touchStartX.value > 50) {
-    navigateImage(-1)
+    navigateImage(-1);
   }
-}
+};
 
 watch(() => store.currentLessonId, () => {
-  extractImagesFromContent()
-})
+  if (store.currentLesson) {
+    extractImagesFromContent();
+  } else {
+    modalImages.value = [];
+  }
+});
 
-onMounted(() => {
-  extractImagesFromContent()
-  document.querySelector('.lesson-content')?.addEventListener('click', handleImageClick)
-})
+onMounted(async () => {
+  isLoading.value = true;
+  await store.fetchChapters();
+  isLoading.value = false;
+  if (store.currentLesson) {
+    extractImagesFromContent();
+  }
+  const lessonContent = document.querySelector('.lesson-content');
+  if (lessonContent) {
+    lessonContent.addEventListener('click', handleImageClick);
+  }
+});
 </script>
 
 <template>
-  <div class="lesson-view">
+  <div class="lesson-view" v-if="!isLoading && store.currentLesson">
     <div class="lesson-header">
       <UiTypography variant="h2">{{ store.currentLesson.title }}</UiTypography>
       <UiTypography variant="caption">
-        Chapter {{ store.currentChapterId }}: {{ store.currentChapter.title }} | 
-        Lesson {{ currentLessonIndex }} of {{ store.currentChapter.lessons.length }}
+        Chapter {{ store.currentChapterId || 'N/A' }}: {{ store.currentChapter?.title || 'No Chapter' }} | 
+        Lesson {{ currentLessonIndex }} of {{ store.currentChapter?.Lessons?.length || 0 }}
       </UiTypography>
     </div>
     
@@ -148,6 +167,12 @@ onMounted(() => {
         </div>
       </div>
     </div>
+  </div>
+  <div v-else-if="isLoading" class="loading">
+    <UiTypography variant="h3">Загрузка...</UiTypography>
+  </div>
+  <div v-else class="error">
+    <UiTypography variant="h3">Ошибка: Урок не найден</UiTypography>
   </div>
 </template>
 
@@ -225,7 +250,7 @@ onMounted(() => {
 
 :deep(.controller-layout) {
   display: flex;
-  flex-direction: column; /* Stack images and features vertically */
+  flex-direction: column;
   gap: 20px;
   margin: 20px 0;
 }
@@ -237,7 +262,7 @@ onMounted(() => {
 }
 
 :deep(.controller-images img) {
-  max-width: 300px; /* Match UiSlider width */
+  max-width: 300px;
   border-radius: 8px;
   border: 1px solid var(--text-secondary);
 }
@@ -383,5 +408,12 @@ onMounted(() => {
 .slide-leave-to {
   transform: translateX(-100%);
   opacity: 0;
+}
+
+.loading, .error {
+  max-width: 1000px;
+  margin: 100px auto;
+  padding: 30px;
+  text-align: center;
 }
 </style>

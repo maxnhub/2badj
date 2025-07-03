@@ -1,6 +1,6 @@
 <script setup>
-import BurgerMenu from './BurgerMenu.vue'
-import UiTypography from './UiKit/UiTypography.vue'
+import BurgerMenu from './BurgerMenu.vue';
+import UiTypography from './UiKit/UiTypography.vue';
 </script>
 
 <template>

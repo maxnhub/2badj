@@ -238,10 +238,95 @@ async function migrateData() {
                 </div>
               </div>
               <div class="video-wrapper">
-                <iframe width="560" height="315" src="https://youtu.be/fe652rGDaFE?si=QvMOhJdqD71knB96" title="Effects Tutorial" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                <iframe width="560" height="315" src="https://www.youtube.com/embed/5QzL0YOtMhY?si=7Y8zX9kL2mN6Y7ZQ" title="Effects Tutorial" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
               </div>
             `,
             audioExample: '/audio/effects.mp3',
+          },
+        ],
+      },
+      {
+        id: 4,
+        title: 'Advanced Mixing Techniques',
+        Lessons: [
+          {
+            id: 11,
+            title: 'Основы сведения треков бит в бит',
+            content: `
+              <h3>Сведение бит в бит</h3>
+              <p>В 99% случаев треки сводятся "бит в бит" — это значит, что удары бочки одного трека совпадают с ударами другого на сильную долю такта. Это создает плавный и естественный переход между треками.</p>
+              <ul>
+                <li><strong>Beat</strong>: Один удар бочки или последовательность ударов, образующая ритм.</li>
+                <li><strong>Такт</strong>: Четыре удара, формирующие музыкальную фразу.</li>
+                <li>Для точного сведения используйте <strong>Pitch Fader</strong> на контроллере для синхронизации BPM.</li>
+              </ul>
+              <h3>Как добиться идеального сведения?</h3>
+              <ol>
+                <li>Включите <strong>Beat Grid</strong> в Rekordbox для визуального контроля.</li>
+                <img src="https://rekordbox.com/-/media/project/pioneer-dj/rekordbox/rekordbox-6/images/feature/beatgrid_01.png" alt="Rekordbox Beat Grid" class="lesson-image">
+                <li>Слушайте треки в наушниках и подстройте темп второго трека.</li>
+                <li>Используйте джоги для точной синхронизации битов.</li>
+              </ol>
+              <div class="note">
+                <p>Всегда проверяйте автоматически расставленный Beat Grid в Rekordbox, так как он может быть неточным!</p>
+              </div>
+              <div class="video-wrapper">
+                <iframe width="560" height="315" src="https://www.youtube.com/embed/4g0tOBQJ6M4?si=B1U6K0P17Fv8SAne" title="Beat Matching Tutorial" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+              </div>
+            `,
+            audioExample: '/audio/beat-matching.mp3',
+          },
+          {
+            id: 12,
+            title: 'Сведение треков с разным BPM',
+            content: `
+              <h3>Работа с разными темпами</h3>
+              <p>Сведение треков с разным BPM требует дополнительных техник, чтобы переход оставался плавным. Это особенно актуально для жанров с большими различиями в темпе, например, RnB (80-100 BPM) и House (120-130 BPM).</p>
+              <ul>
+                <li><strong>Плавное изменение темпа</strong>: Постепенно увеличивайте или уменьшайте BPM первого трека, используя Pitch Fader.</li>
+                <li><strong>Использование петель</strong>: Создайте петлю в более медленном треке, чтобы замаскировать переход.</li>
+                <li><strong>Эффекты</strong>: Применяйте фильтры или эхо для сглаживания смены темпа.</li>
+              </ul>
+              <h3>Пример на Pioneer CDJ-3000</h3>
+              <div class="controller-images">
+                <img src="https://www.pioneerdj.com/-/media/pioneerdj/images/products/player/cdj-3000/cdj-3000_hero_1792x1316.jpg" alt="Pioneer CDJ-3000" class="lesson-image">
+              </div>
+              <ol>
+                <li>Загрузите треки с разным BPM (например, 87 и 126 BPM).</li>
+                <li>Используйте <strong>Auto Loop</strong> для создания 4-ударной петли на медленном треке.</li>
+                <li>Постепенно увеличивайте темп, пока он не приблизится к темпу второго трека.</li>
+              </ol>
+              <div class="video-wrapper">
+                <iframe width="560" height="315" src="https://www.youtube.com/embed/5QzL0YOtMhY?si=7Y8zX9kL2mN6Y7ZQ" title="Mixing Different BPMs" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+              </div>
+            `,
+            audioExample: '/audio/mixing-bpm.mp3',
+          },
+          {
+            id: 13,
+            title: 'Креативные приемы сведения',
+            content: `
+              <h3>Создание уникального звучания</h3>
+              <p>В 1% случаев диджеи намеренно смещают биты, чтобы создать уникальный звук. Это подходит для экспериментальных миксов или жанров, где допустимы нестандартные переходы.</p>
+              <ul>
+                <li><strong>Смещение битов</strong>: Сдвиньте бит второго трека вперед или назад для создания нового ритмического рисунка.</li>
+                <li><strong>Hot Cues</strong>: Используйте cue-точки для быстрого перехода к определенным частям трека.</li>
+                <li><strong>Эффекты для переходов</strong>: Применяйте фильтры, эхо или реверб для драматичных смен.</li>
+              </ul>
+              <h3>Пример креативного сведения</h3>
+              <div class="controller-images">
+                <img src="https://www.pioneerdj.com/-/media/pioneerdj/images/products/mixer/djm-900nxs2/djm-900nxs2_hero_1792x1316.jpg" alt="Pioneer DJM-900NXS2" class="lesson-image">
+              </div>
+              <ol>
+                <li>Установите cue-точку на дропе второго трека.</li>
+                <li>Примените эхо-эффект на последнем такте первого трека.</li>
+                <li>Сдвиньте бит второго трека на пол-удара для уникального эффекта.</li>
+              </ol>
+              <div class="note">
+                <p>Экспериментируйте с креативным сведением только после освоения базовых техник!</p>
+              </div>
+            `,
+            audioExample: '/audio/creative-mixing.mp3',
           },
         ],
       },

@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia';
 import axios from 'axios';
+import { useLanguageStore } from './language.js';
 
 export const useLessonsStore = defineStore('lessons', {
   state: () => ({
@@ -24,7 +25,8 @@ export const useLessonsStore = defineStore('lessons', {
   actions: {
     async fetchChapters() {
       try {
-        const response = await axios.get('/api/chapters');
+        const languageStore = useLanguageStore();
+        const response = await axios.get(`/api/chapters?lang=${languageStore.currentLanguage}`);
         console.log('API Response:', response.data);
         this.chapters = response.data;
         if (this.chapters.length > 0 && this.chapters[0].Lessons) {

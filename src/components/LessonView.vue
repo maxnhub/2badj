@@ -1,10 +1,12 @@
 <script setup>
 import { useLessonsStore } from '../stores/lessons';
+import { useLanguageStore } from '../stores/language';
 import UiButton from './UiKit/UiButton.vue';
 import UiTypography from './UiKit/UiTypography.vue';
 import { ref, onMounted, watch, computed } from 'vue';
 
 const store = useLessonsStore();
+const languageStore = useLanguageStore();
 const modalImages = ref([]);
 const showImageModal = ref(false);
 const currentImageIndex = ref(0);
@@ -17,6 +19,9 @@ const currentLessonIndex = computed(() => {
   const lessonIndex = chapter?.Lessons?.findIndex(lesson => lesson.id === store.currentLessonId);
   return lessonIndex !== -1 ? lessonIndex + 1 : 1;
 });
+
+const lessonText = computed(() => languageStore.getTranslation('lesson'));
+const nextLessonText = computed(() => languageStore.getTranslation('nextLesson'));
 
 const extractImagesFromContent = () => {
   if (!store.currentLesson?.content) {
@@ -72,209 +77,186 @@ const handleTouchStart = (e) => {
 
 const handleTouchEnd = (e) => {
   touchEndX.value = e.changedTouches[0].screenX;
-  handleSwipe();
-};
-
-const handleSwipe = () => {
-  if (touchStartX.value - touchEndX.value > 50) {
-    navigateImage(1);
-  }
-  if (touchEndX.value - touchStartX.value > 50) {
-    navigateImage(-1);
+  const deltaX = touchStartX.value - touchEndX.value;
+  if (deltaX > 50) {
+    navigateImage(1); // Swipe left
+  } else if (deltaX < -50) {
+    navigateImage(-1); // Swipe right
   }
 };
 
-watch(() => store.currentLessonId, () => {
-  if (store.currentLesson) {
+onMounted(() => {
+  store.fetchChapters().then(() => {
+    isLoading.value = false;
     extractImagesFromContent();
-  } else {
-    modalImages.value = [];
-  }
+  });
 });
 
-onMounted(async () => {
-  isLoading.value = true;
-  await store.fetchChapters();
-  isLoading.value = false;
-  if (store.currentLesson) {
+watch(
+  () => store.currentLesson,
+  () => {
     extractImagesFromContent();
   }
-  const lessonContent = document.querySelector('.lesson-content');
-  if (lessonContent) {
-    lessonContent.addEventListener('click', handleImageClick);
-  }
-});
+);
 </script>
 
 <template>
-  <div class="lesson-view" v-if="!isLoading && store.currentLesson">
-    <div class="lesson-header">
-      <UiTypography variant="h2">{{ store.currentLesson.title }}</UiTypography>
-      <UiTypography variant="caption">
-        Chapter {{ store.currentChapterId || 'N/A' }}: {{ store.currentChapter?.title || 'No Chapter' }} | 
-        Lesson {{ currentLessonIndex }} of {{ store.currentChapter?.Lessons?.length || 0 }}
-      </UiTypography>
+  <div class="lesson-view">
+    <div v-if="isLoading" class="loading">
+      <UiTypography variant="h3">Загрузка...</UiTypography>
     </div>
-    
-    <div 
-      class="lesson-content" 
-      v-html="store.currentLesson.content"
-      @click="handleImageClick"
-    ></div>
-    
-    <UiButton 
-      v-if="store.hasNextLesson || store.hasNextChapter" 
-      @click="store.nextLesson"
-      class="next-button"
-    >
-      Следующий урок →
-    </UiButton>
+    <div v-else-if="store.currentLesson" class="lesson-content" @click="handleImageClick">
+      <UiTypography variant="h2">{{ store.currentLesson.title }}</UiTypography>
+      <UiTypography variant="body1" class="lesson-number">
+        {{ lessonText }} {{ currentLessonIndex }} из {{ store.currentChapter?.Lessons?.length }}
+      </UiTypography>
+      <div v-html="store.currentLesson.content" />
+      <audio
+        v-if="store.currentLesson.audioExample"
+        :src="store.currentLesson.audioExample"
+        controls
+        class="audio-player"
+      ></audio>
+      <UiButton
+        v-if="store.hasNextLesson || store.hasNextChapter"
+        variant="primary"
+        @click="store.nextLesson"
+      >
+        {{ nextLessonText }}
+      </UiButton>
+    </div>
+    <div v-else class="error">
+      <UiTypography variant="h3">Урок не найден</UiTypography>
+    </div>
 
-    <div 
-      v-if="showImageModal" 
-      class="image-modal" 
-      @click.self="closeImageModal"
-      @touchstart="handleTouchStart"
-      @touchend="handleTouchEnd"
-    >
-      <div class="modal-content">
-        <transition name="slide" mode="out-in">
-          <img 
-            :key="currentImageIndex"
-            :src="modalImages[currentImageIndex]?.src" 
-            :alt="modalImages[currentImageIndex]?.alt"
-          >
-        </transition>
-        
-        <div v-if="modalImages.length > 1" class="slider-thumbnails">
-          <div 
-            v-for="(img, index) in modalImages"
-            :key="index"
-            class="thumbnail"
-            :class="{ active: index === currentImageIndex }"
-            @click="currentImageIndex = index"
-          >
-            <img :src="img.src" :alt="img.alt">
+    <div v-if="showImageModal" class="image-modal" @touchstart="handleTouchStart" @touchend="handleTouchEnd">
+      <transition name="slide">
+        <div class="modal-content" :key="currentImageIndex">
+          <button class="close-btn" @click="closeImageModal">&times;</button>
+          <img
+            :src="modalImages[currentImageIndex].src"
+            :alt="modalImages[currentImageIndex].alt"
+            @click.stop
+          />
+          <div class="image-counter">
+            {{ currentImageIndex + 1 }} / {{ modalImages.length }}
+          </div>
+          <div class="slider-thumbnails">
+            <div
+              v-for="(image, index) in modalImages"
+              :key="index"
+              class="thumbnail"
+              :class="{ active: index === currentImageIndex }"
+              @click="currentImageIndex = index"
+            >
+              <img :src="image.src" :alt="image.alt" />
+            </div>
           </div>
         </div>
-        
-        <button class="close-btn" @click.stop="closeImageModal">
-          ×
-        </button>
-        
-        <div class="image-counter" v-if="modalImages.length > 1">
-          {{ currentImageIndex + 1 }} / {{ modalImages.length }}
-        </div>
-      </div>
+      </transition>
     </div>
-  </div>
-  <div v-else-if="isLoading" class="loading">
-    <UiTypography variant="h3">Загрузка...</UiTypography>
-  </div>
-  <div v-else class="error">
-    <UiTypography variant="h3">Ошибка: Урок не найден</UiTypography>
   </div>
 </template>
 
 <style scoped>
 .lesson-view {
   max-width: 1000px;
-  margin: 100px auto;
+  margin: 80px auto 20px;
+  padding: 0 20px;
+}
+
+.lesson-content {
+  background: var(--background-light);
   padding: 30px;
-  background: var(--text-light);
-  border-radius: 12px;
-  box-shadow: 0 4px 20px var(--shadow);
+  border-radius: 8px;
+  box-shadow: 0 2px 8px var(--shadow);
 }
 
-.lesson-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 30px;
-  padding-bottom: 15px;
-  border-bottom: 1px solid var(--text-secondary);
-}
-
-.next-button {
-  margin-top: 40px;
-  display: block;
+.audio-player {
   width: 100%;
+  margin: 20px 0;
+  outline: none;
 }
 
-:deep(.lesson-content) {
-  line-height: 1.7;
-  color: var(--neutral-dark);
+.lesson-number {
+  color: var(--text-secondary);
+  margin-bottom: 20px;
+}
+
+:deep(.lesson-content h3) {
+  margin: 25px 0 15px;
+  color: var(--text-primary);
+}
+
+:deep(.lesson-content p) {
+  margin-bottom: 15px;
+}
+
+:deep(.lesson-content ul, :deep(.lesson-content ol)) {
+  margin: 15px 0;
+  padding-left: 30px;
+}
+
+:deep(.lesson-content li) {
+  margin-bottom: 10px;
+}
+
+:deep(.lesson-content kbd) {
+  background-color: var(--background);
+  border: 1px solid var(--text-secondary);
+  border-radius: 4px;
+  padding: 2px 6px;
+  font-size: 14px;
+  font-family: monospace;
+  color: var(--text-primary);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
 }
 
 :deep(.shortcuts-grid) {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  gap: 12px;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 10px;
   margin: 20px 0;
-  background: var(--background-light);
-  padding: 15px;
-  border-radius: 8px;
 }
 
-:deep(kbd) {
-  background: var(--primary-dark);
-  color: var(--text-light);
-  padding: 3px 6px;
+:deep(.shortcuts-grid div) {
+  background: var(--background);
+  padding: 10px;
   border-radius: 4px;
-  font-family: monospace;
+  text-align: center;
 }
 
 :deep(.note) {
-  background: var(--background-light);
-  border-left: 4px solid var(--accent);
-  padding: 12px 15px;
-  margin: 20px 0;
-  border-radius: 0 4px 4px 0;
-}
-
-:deep(a) {
-  color: var(--primary-light);
-  text-decoration: none;
-}
-
-:deep(a:hover) {
-  text-decoration: underline;
-}
-
-:deep(.lesson-image) {
-  max-width: 100%;
+  background: var(--background);
+  padding: 15px;
   border-radius: 8px;
-  margin: 15px 0;
-  box-shadow: 0 4px 12px var(--shadow);
-}
-
-:deep(.controller-layout) {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
+  border-left: 4px solid var(--primary-light);
   margin: 20px 0;
 }
 
 :deep(.controller-images) {
   display: flex;
-  flex-direction: column;
-  gap: 10px;
+  flex-wrap: wrap;
+  gap: 20px;
+  margin: 20px 0;
 }
 
-:deep(.controller-images img) {
-  max-width: 300px;
+:deep(.lesson-image) {
+  max-width: 100%;
   border-radius: 8px;
-  border: 1px solid var(--text-secondary);
+  cursor: pointer;
+  transition: transform 0.2s;
 }
 
-:deep(.features) {
-  flex: 1;
+:deep(.lesson-image:hover) {
+  transform: scale(1.02);
 }
 
 :deep(.video-wrapper) {
   position: relative;
   padding-bottom: 56.25%;
-  margin: 25px 0;
+  height: 0;
+  margin: 20px 0;
 }
 
 :deep(.video-wrapper iframe) {

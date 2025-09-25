@@ -240,7 +240,7 @@ const chaptersData = [
               <h3>Как добиться идеального сведения?</h3>
               <ol>
                 <li>Включите <strong>Beat Grid</strong> в Rekordbox для визуального контроля.</li>
-                <img src="https://rekordbox.com/-/media/project/pioneer-dj/rekordbox/rekordbox-6/images/feature/beatgrid_01.png" alt="Rekordbox Beat Grid" class="lesson-image">
+                <img src="https://cdn.prod.website-files.com/5abf6872d0f264292bfb1c2d/6760aa73b5c684061dd156f9_6760a394b4acb4a80755b4cc_Corret%2520Beatgrid.jpeg" alt="Rekordbox Beat Grid" class="lesson-image">
                 <li>Слушайте треки в наушниках и подстройте темп второго трека.</li>
                 <li>Используйте джоги для точной синхронизации битов.</li>
               </ol>
@@ -266,7 +266,7 @@ const chaptersData = [
               </ul>
               <h3>Пример на Pioneer CDJ-3000</h3>
               <div class="controller-images">
-                <img src="https://www.pioneerdj.com/-/media/pioneerdj/images/products/player/cdj-3000/cdj-3000_hero_1792x1316.jpg" alt="Pioneer CDJ-3000" class="lesson-image">
+                <img src="https://store.djtechtools.com/cdn/shop/files/PioneerDJM-A9CDJ-3000Bundle.jpg?v=1691703142&width=3840" alt="Pioneer CDJ-3000" class="lesson-image">
               </div>
               <ol>
                 <li>Загрузите треки с разным BPM (например, 87 и 126 BPM).</li>
@@ -274,7 +274,7 @@ const chaptersData = [
                 <li>Постепенно увеличивайте темп, пока он не приблизится к темпу второго трека.</li>
               </ol>
               <div class="video-wrapper">
-                <iframe width="560" height="315" src="https://www.youtube.com/embed/5QzL0YOtMhY?si=7Y8zX9kL2mN6Y7ZQ" title="Mixing Different BPMs" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                <iframe width="560" height="315" src="https://youtu.be/b-JtZrj_ftc?si=Mbn1wp9xWu1v-ghN" title="Mixing Different BPMs" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
               </div>
             `,
                 audioExample: '/audio/mixing-bpm.mp3',
@@ -305,6 +305,108 @@ const chaptersData = [
             `,
                 audioExample: '/audio/creative-mixing.mp3',
             },
+            {
+              id: 14,
+              title: 'Сведение с помощью круга Камелота',
+              content: `
+                  <h3>Введение в круг Камелота</h3>
+                  <p>Круг Камелота — это система гармонического сведения, которая помогает диджеям смешивать треки в совместимых тональностях для более плавных переходов.</p>
+                  
+                  <div class="camelot-wheel">
+                      <img src="https://zwook.ru/uploads/common/camelotcircle-cuatripatipedo.jpg" alt="Круг Камелота" class="lesson-image">
+                  </div>
+                  
+                  <h3>Как это работает:</h3>
+                  <ul>
+                      <li><strong>Тональности представлены в виде кодов</strong> (например, 1A, 2B, 3A)</li>
+                      <li><strong>Одинаковый код</strong>: Идеальное гармоническое совпадение</li>
+                      <li><strong>Соседние коды</strong> (например, 1A → 2A или 1A → 1B): Хорошее совпадение</li>
+                      <li><strong>+/- 7</strong>: Относительная минорная/мажорная тональность</li>
+                  </ul>
+                  
+                  <h3>Практическое использование в Rekordbox:</h3>
+                  <ol>
+                      <li>Анализируйте треки для определения тональности</li>
+                      <li>Сортируйте плейлист по тональности с использованием системы Камелота</li>
+                      <li>Выбирайте треки с совместимыми тональностями для бесшовного сведения</li>
+                  </ol>
+                  
+                  <div class="note">
+                      <p>Гармоническое сведение может сделать ваши сеты более профессиональными и музыкально связными!</p>
+                  </div>
+                  
+                  <div class="video-wrapper">
+                      <iframe width="560" height="315" src="https://www.youtube.com/embed/-PwD6UyT9y4?si=eVGaKRNh5-pWB2r1" title="Camelot Wheel Tutorial" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                  </div>
+              `,
+              audioExample: '/audio/camelot-wheel.mp3',
+            },
+            {
+              id: 15,
+              title: 'Продвинутые техники гармонического сведения',
+              content: `
+                  <h3>За пределами базового сведения по Камелоту</h3>
+                  <p>Освоив основы гармонического сведения, вы можете исследовать более продвинутые техники для креативных переходов.</p>
+                  
+                  <h3>Продвинутые переходы по Камелоту:</h3>
+                  <ul>
+                      <li><strong>Повышение энергии</strong>: Двигайтесь по часовой стрелке (например, 1A → 2A → 3A) для постепенного наращивания энергии</li>
+                      <li><strong>Снижение энергии</strong>: Двигайтесь против часовой стрелки (например, 5A → 4A → 3A) для плавных спадов</li>
+                      <li><strong>Модальные смещения</strong>: Переходите между относительными мажорными/минорными тональностями (1A ↔ 1B)</li>
+                      <li><strong>Прыжки на +6/-6</strong>: Создавайте драматичные смены тональности для ключевых моментов</li>
+                  </ul>
+                  
+                  <h3>Практический пример для наращивания напряжения:</h3>
+                  <ol>
+                      <li>Начните с 8A (До минор) - интро секция</li>
+                      <li>Перейдите к 9A (Ре-бемоль минор) - наращивание напряжения</li>
+                      <li>Переход к 10A (Ре минор) - пиковая энергия</li>
+                      <li>Дроп на 11A (Ми-бемоль минор) - основная секция</li>
+                  </ol>
+                  
+                  <div class="note">
+                      <p>Используйте эти техники для создания эмоциональных путешествий в ваших сетах!</p>
+                  </div>
+              `,
+              audioExample: '/audio/advanced-harmonic.mp3',
+            },
+            {
+              id: 16,
+              title: 'Круг Камелота на практике: подходы для разных жанров',
+              content: `
+                  <h3>Применение гармонического сведения к различным жанрам</h3>
+                  <p>Разные музыкальные жанры требуют разных подходов к гармоническому сведению.</p>
+                  
+                  <h3>Стратегии для конкретных жанров:</h3>
+                  
+                  <div class="mixing-techniques">
+                      <div class="technique">
+                          <h4>House/Techno</h4>
+                          <p>Придерживайтесь соседних тональностей для бесшовных длинных миксов. Идеально для поддержания энергии на танцполе.</p>
+                      </div>
+                      <div class="technique">
+                          <h4>Hip-Hop/R&B</h4>
+                          <p>Используйте переходы между относительными мажорными/минорными тональностями для эмоционального контраста.</p>
+                      </div>
+                      <div class="technique">
+                          <h4>Progressive/Trance</h4>
+                          <p>Применяйте шаги +1/+2 для постепенного наращивания энергии через несколько треков.</p>
+                      </div>
+                  </div>
+                  
+                  <h3>Настройка Rekordbox для гармонического сведения:</h3>
+                  <ol>
+                      <li>Включите отображение тональностей по Камелоту в настройках</li>
+                      <li>Создайте умные плейлисты, сгруппированные по тональностям</li>
+                      <li>Используйте функцию "похожие треки" для поиска совместимых вариантов</li>
+                  </ol>
+                  
+                  <div class="video-wrapper">
+                      <iframe width="560" height="315" src="https://www.youtube.com/embed/VOcEyIFFYxM?si=Cdzgq18racQaWDLT" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                  </div>
+              `,
+              audioExample: '/audio/genre-harmonic.mp3',
+            }
         ],
     },
 ];

@@ -236,7 +236,7 @@ const chaptersData = [
             <h3>How to get the perfect mix?</h3>
             <ol>
             <li>Turn on <strong>Beat Grid</strong> in Rekordbox for a visual reference.</li>
-            <img src="https://rekordbox.com/-/media/project/pioneer-dj/rekordbox/rekordbox-6/images/feature/beatgrid_01.png" alt="Rekordbox Beat Grid" class="lesson-image">
+            <img src="https://cdn.prod.website-files.com/5abf6872d0f264292bfb1c2d/6760aa73b5c684061dd156f9_6760a394b4acb4a80755b4cc_Corret%2520Beatgrid.jpeg" alt="Rekordbox Beat Grid" class="lesson-image">
             <li>Listen tracks in headphones and adjust the tempo of the second track.</li>
             <li>Use the jog wheels to sync the beats precisely.</li>
             </ol>
@@ -262,7 +262,7 @@ const chaptersData = [
                 </ul>
                 <h3>Example on a Pioneer CDJ-3000</h3>
                 <div class="controller-images">
-                <img src="https://www.pioneerdj.com/-/media/pioneerdj/images/products/player/cdj-3000/cdj-3000_hero_1792x1316.jpg" alt="Pioneer CDJ-3000" class="lesson-image">
+                <img src="https://store.djtechtools.com/cdn/shop/files/PioneerDJM-A9CDJ-3000Bundle.jpg?v=1691703142&width=3840" alt="Pioneer CDJ-3000" class="lesson-image">
                 </div>
                 <ol>
                 <li>Load tracks with different BPMs (e.g. 87 and 126 BPM).</li>
@@ -270,7 +270,7 @@ const chaptersData = [
                 <li>Gradually increase the tempo until it matches the tempo of the second track.</li>
                 </ol>
                 <div class="video-wrapper">
-                <iframe width="560" height="315" src="https://www.youtube.com/embed/5QzL0YOtMhY?si=7Y8zX9kL2mN6Y7ZQ" title="Mixing Different BPMs" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                <iframe width="560" height="315" src="https://youtu.be/b-JtZrj_ftc?si=Mbn1wp9xWu1v-ghN" title="Mixing Different BPMs" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
                 </div>
                 `,
                 audioExample: '/audio/mixing-bpm.mp3',
@@ -301,6 +301,108 @@ const chaptersData = [
                 `,
                 audioExample: '/audio/creative-mixing.mp3',
             },
+            {
+              id: 14,
+              title: 'Mixing with the Camelot Wheel',
+              content: `
+                  <h3>Introduction to the Camelot Wheel</h3>
+                  <p>The Camelot Wheel is a system for harmonic mixing that helps DJs mix tracks in compatible keys for smoother transitions.</p>
+                  
+                  <div class="camelot-wheel">
+                      <img src="https://zwook.ru/uploads/common/camelotcircle-cuatripatipedo.jpg" alt="Camelot Wheel" class="lesson-image">
+                  </div>
+                  
+                  <h3>How it works:</h3>
+                  <ul>
+                      <li><strong>Keys are represented as codes</strong> (e.g., 1A, 2B, 3A)</li>
+                      <li><strong>Same code</strong>: Perfect harmonic match</li>
+                      <li><strong>Adjacent codes</strong> (e.g., 1A → 2A or 1A → 1B): Good match</li>
+                      <li><strong>+/- 7</strong>: Relative minor/major match</li>
+                  </ul>
+                  
+                  <h3>Practical usage in Rekordbox:</h3>
+                  <ol>
+                      <li>Analyze tracks to detect key</li>
+                      <li>Sort your playlist by key using the Camelot system</li>
+                      <li>Choose tracks with compatible keys for seamless mixing</li>
+                  </ol>
+                  
+                  <div class="note">
+                      <p>Harmonic mixing can make your sets sound more professional and musically coherent!</p>
+                  </div>
+                  
+                  <div class="video-wrapper">
+                      <iframe width="560" height="315" src="https://www.youtube.com/embed/-PwD6UyT9y4?si=eVGaKRNh5-pWB2r1" title="Camelot Wheel Tutorial" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                  </div>
+              `,
+              audioExample: '/audio/camelot-wheel.mp3',
+            },
+            {
+              id: 15,
+              title: 'Advanced Harmonic Mixing Techniques',
+              content: `
+                  <h3>Beyond Basic Camelot Mixing</h3>
+                  <p>Once you master basic harmonic mixing, you can explore more advanced techniques for creative transitions.</p>
+                  
+                  <h3>Advanced Camelot transitions:</h3>
+                  <ul>
+                      <li><strong>Energy boosting</strong>: Move clockwise around the wheel (e.g., 1A → 2A → 3A) to gradually increase energy</li>
+                      <li><strong>Energy reducing</strong>: Move counterclockwise (e.g., 5A → 4A → 3A) for smoother energy drops</li>
+                      <li><strong>Modal mixture</strong>: Jump between relative major/minor keys (e.g., 1A ↔ 1B)</li>
+                      <li><strong>+6/-6 jumps</strong>: Create dramatic key changes for impactful moments</li>
+                  </ul>
+                  
+                  <h3>Practical example for a build-up:</h3>
+                  <ol>
+                      <li>Start at 8A (C minor) - intro section</li>
+                      <li>Move to 9A (D♭ minor) - build tension</li>
+                      <li>Transition to 10A (D minor) - peak energy</li>
+                      <li>Drop at 11A (E♭ minor) - main section</li>
+                  </ol>
+                  
+                  <div class="note">
+                      <p>Use these techniques to create emotional journeys in your sets!</p>
+                  </div>
+              `,
+              audioExample: '/audio/advanced-harmonic.mp3',
+            },
+            {
+              id: 16,
+              title: 'Camelot Wheel in Practice: Genre-Specific Approaches',
+              content: `
+                  <h3>Applying Harmonic Mixing to Different Genres</h3>
+                  <p>Different music genres benefit from different harmonic mixing approaches.</p>
+                  
+                  <h3>Genre-specific strategies:</h3>
+                  
+                  <div class="mixing-techniques">
+                      <div class="technique">
+                          <h4>House/Techno</h4>
+                          <p>Stick to adjacent keys for seamless, long mixes. Perfect for maintaining energy on the dancefloor.</p>
+                      </div>
+                      <div class="technique">
+                          <h4>Hip-Hop/R&B</h4>
+                          <p>Use relative major/minor shifts (same number, different letter) for emotional contrast.</p>
+                      </div>
+                      <div class="technique">
+                          <h4>Progressive/Trance</h4>
+                          <p>Employ +1/+2 steps for gradual energy builds across multiple tracks.</p>
+                      </div>
+                  </div>
+                  
+                  <h3>Setting up Rekordbox for harmonic mixing:</h3>
+                  <ol>
+                      <li>Enable Camelot key display in preferences</li>
+                      <li>Create smart playlists grouped by key</li>
+                      <li>Use the related tracks feature to find compatible options</li>
+                  </ol>
+                  
+                  <div class="video-wrapper">
+                      <iframe width="560" height="315" src="https://www.youtube.com/embed/VOcEyIFFYxM?si=Cdzgq18racQaWDLT" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                  </div>
+              `,
+              audioExample: '/audio/genre-harmonic.mp3',
+            }
         ],
     },
 ];

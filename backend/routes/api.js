@@ -3,14 +3,13 @@ const router = express.Router();
 const Chapter = require('../models/Chapter.js');
 const Lesson = require('../models/Lesson.js');
 
-// Получить все главы с уроками
+// Получаем все главы с уроками
 router.get('/chapters', async (req, res) => {
   try {
     const lang = req.query.lang || 'ru';
     const chaptersData = require(`../../src/locales/${lang}.js`);
     
-    // Для простоты возвращаем данные из файла локализации
-    // В реальном проекте можно хранить данные в базе с учетом языка
+    // Возвращаем данные из файла локализации
     res.json(chaptersData);
   } catch (err) {
     console.error('Error fetching chapters:', err);
@@ -18,7 +17,7 @@ router.get('/chapters', async (req, res) => {
   }
 });
 
-// Создать новую главу
+// Создаем новую главу
 router.post('/chapters', async (req, res) => {
   try {
     const { title } = req.body;
@@ -30,7 +29,7 @@ router.post('/chapters', async (req, res) => {
   }
 });
 
-// Создать новый урок
+// Создаем новый урок
 router.post('/chapters/:chapterId/lessons', async (req, res) => {
   try {
     const { title, content, audioExample } = req.body;

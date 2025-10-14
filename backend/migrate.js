@@ -21,7 +21,7 @@ async function migrateData(language = 'ru') {
     console.log('Database connected for migration');
 
     console.log('Synchronizing database...');
-    await sequelize.sync({ force: true }); // Пересоздаем таблицы
+    await sequelize.sync({ force: true }); // Пересоздает таблицы
     console.log('Database synced');
 
     console.log('Starting data migration...');

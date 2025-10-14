@@ -133,6 +133,13 @@ const chaptersData = [
               <div class="video-wrapper">
                 <iframe width="560" height="315" src="https://www.youtube.com/embed/4g0tOBQJ6M4?si=B1U6K0P17Fv8SAne" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
               </div>
+              <div class="interactive-section">
+                <h4>🎯 Практикуйтесь онлайн!</h4>
+                <p>Используйте наш интерактивный тренажер для отработки beat matching:</p>
+                <button onclick="window.openBeatMatchingTrainer()" class="interactive-btn">
+                  Открыть Beat Matching Тренажер
+                </button>
+              </div>
             `,
                 audioExample: '/audio/mixing-basics.mp3',
             },

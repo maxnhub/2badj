@@ -3,6 +3,7 @@ import { useLessonsStore } from '../stores/lessons';
 import { useLanguageStore } from '../stores/language';
 import UiButton from './UiKit/UiButton.vue';
 import UiTypography from './UiKit/UiTypography.vue';
+import BeatMatchingTrainer from './BeatMatchingTrainer.vue';
 import { ref, onMounted, watch, computed } from 'vue';
 
 const store = useLessonsStore();
@@ -85,6 +86,19 @@ const handleTouchEnd = (e) => {
   }
 };
 
+// Добавляем новое состояние для отображения тренажера
+const showBeatMatchingTrainer = ref(false);
+
+// Функция для показа тренажера
+const openBeatMatchingTrainer = () => {
+  showBeatMatchingTrainer.value = true;
+};
+
+// Функция для возврата к уроку
+const closeBeatMatchingTrainer = () => {
+  showBeatMatchingTrainer.value = false;
+};
+
 onMounted(() => {
   store.fetchChapters().then(() => {
     isLoading.value = false;
@@ -105,12 +119,29 @@ watch(
     <div v-if="isLoading" class="loading">
       <UiTypography variant="h3">Загрузка...</UiTypography>
     </div>
-    <div v-else-if="store.currentLesson" class="lesson-content" @click="handleImageClick">
+    <div v-if="showBeatMatchingTrainer" class="trainer-overlay">
+      <div class="trainer-header">
+        <UiButton @click="closeBeatMatchingTrainer" variant="secondary">
+          ← Назад к уроку
+        </UiButton>
+        <UiTypography variant="h2">Beat Matching Тренажер</UiTypography>
+      </div>
+      <BeatMatchingTrainer />
+    </div>
+
+    <div v-else-if="!isLoading && store.currentLesson" class="lesson-content" @click="handleImageClick">
       <UiTypography variant="h2">{{ store.currentLesson.title }}</UiTypography>
       <UiTypography variant="body1" class="lesson-number">
         {{ lessonText }} {{ currentLessonIndex }} из {{ store.currentChapter?.Lessons?.length }}
       </UiTypography>
-      <div v-html="store.currentLesson.content" />
+      <div v-html="store.currentLesson.content"></div>
+      <div v-if="[6, 11].includes(store.currentLesson.id)" class="practice-section">
+        <UiTypography variant="h3">🎵 Практическое задание</UiTypography>
+        <UiButton @click="openBeatMatchingTrainer" variant="primary" size="large">
+          🎧 Открыть Beat Matching Тренажер
+        </UiButton>
+        <p>Потренируйтесь синхронизировать биты двух треков с разным BPM</p>
+      </div>
       <audio
         v-if="store.currentLesson.audioExample"
         :src="store.currentLesson.audioExample"
@@ -397,5 +428,38 @@ watch(
   margin: 100px auto;
   padding: 30px;
   text-align: center;
+}
+
+.practice-section {
+  background: var(--background);
+  padding: 25px;
+  border-radius: 12px;
+  border-left: 4px solid var(--primary-light);
+  margin: 30px 0;
+  text-align: center;
+}
+
+.trainer-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--background-light);
+  z-index: 1000;
+  overflow-y: auto;
+}
+
+.trainer-header {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 20px;
+  background: var(--primary-dark);
+  color: var(--text-light);
+}
+
+.trainer-header button {
+  margin-right: auto;
 }
 </style>

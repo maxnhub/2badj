@@ -111,24 +111,31 @@ const chaptersData = [
                 id: 6,
                 title: 'Basic Mixing on the DDJ-400',
                 content: `
-        <h3>Techniques for Beginners:</h3>
-        <div class="mixing-techniques">
-        <div class="technique">
-        <h4>1. Beat Matching</h4>
-        <p>Matching the BPM of Two Tracks Using Jog Wheels</p>
-        </div>
-        <div class="technique">
-        <h4>2. Fader Mixing</h4>
-        <p>Fade Between Channels</p>
-        </div>
-        <div class="technique">
-        <h4>3. Using Effects</h4>
-        <p>Adding Filters and Echo</p>
-        </div>
-        </div>
-        <div class="video-wrapper">
-        <iframe width="560" height="315" src="https://www.youtube.com/embed/4g0tOBQJ6M4?si=B1U6K0P17Fv8SAne" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-        </div>
+                    <h3>Techniques for Beginners:</h3>
+                    <div class="mixing-techniques">
+                        <div class="technique">
+                            <h4>1. Beat Matching</h4>
+                            <p>Matching the BPM of Two Tracks Using Jog Wheels</p>
+                        </div>
+                    <div class="technique">
+                        <h4>2. Fader Mixing</h4>
+                        <p>Fade Between Channels</p>
+                    </div>
+                    <div class="technique">
+                        <h4>3. Using Effects</h4>
+                        <p>Adding Filters and Echo</p>
+                    </div>
+                    </div>
+                    <div class="video-wrapper">
+                        <iframe width="560" height="315" src="https://www.youtube.com/embed/4g0tOBQJ6M4?si=B1U6K0P17Fv8SAne" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                    </div>
+                    <div class="interactive-section">
+                        <h4>🎯 Practice online!</h4>
+                        <p>Use our interactive trainer to practice beat matching:</p>
+                        <button onclick="window.openBeatMatchingTrainer()" class="interactive-btn">
+                            Open Beat Matching Trainer
+                    </button>
+                    </div>
         `,
                 audioExample: '/audio/mixing-basics.mp3',
             },

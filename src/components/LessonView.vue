@@ -4,7 +4,9 @@ import { useLanguageStore } from '../stores/language';
 import UiButton from './UiKit/UiButton.vue';
 import UiTypography from './UiKit/UiTypography.vue';
 import BeatMatchingTrainer from './BeatMatchingTrainer.vue';
-import { ref, onMounted, watch, computed } from 'vue';
+import EQTrainer from './EQTrainer.vue';
+import EffectsTrainer from './EffectsTrainer.vue';
+import { ref, onMounted, watch, computed, nextTick } from 'vue';
 
 const store = useLessonsStore();
 const languageStore = useLanguageStore();
@@ -15,6 +17,11 @@ const touchStartX = ref(0);
 const touchEndX = ref(0);
 const isLoading = ref(true);
 
+// Состояния для тренажеров
+const showBeatMatchingTrainer = ref(false);
+const showEQTrainer = ref(false);
+const showEffectsTrainer = ref(false);
+
 const currentLessonIndex = computed(() => {
   const chapter = store.currentChapter;
   const lessonIndex = chapter?.Lessons?.findIndex(lesson => lesson.id === store.currentLessonId);
@@ -23,6 +30,107 @@ const currentLessonIndex = computed(() => {
 
 const lessonText = computed(() => languageStore.getTranslation('lesson'));
 const nextLessonText = computed(() => languageStore.getTranslation('nextLesson'));
+
+// Функции для открытия тренажеров
+const openBeatMatchingTrainer = () => {
+  showBeatMatchingTrainer.value = true;
+};
+
+const openEQTrainer = () => {
+  showEQTrainer.value = true;
+};
+
+const openEffectsTrainer = () => {
+  showEffectsTrainer.value = true;
+};
+
+// Функция для закрытия всех тренажеров
+const closeTrainer = () => {
+  showBeatMatchingTrainer.value = false;
+  showEQTrainer.value = false;
+  showEffectsTrainer.value = false;
+};
+
+// Универсальный обработчик кликов
+const handleContentClick = (event) => {
+  // Обработка кликов по изображениям
+  if (event.target.tagName === 'IMG' && event.target.src && !event.target.src.startsWith('data:')) {
+    const index = Array.from(document.querySelectorAll('.lesson-content img'))
+      .filter(img => img.src && !img.src.startsWith('data:'))
+      .findIndex(img => img === event.target);
+    if (index !== -1) {
+      openImageModal(index);
+    }
+    return;
+  }
+
+  // Обработка кликов по интерактивным кнопкам
+  const button = event.target.closest('[data-action]');
+  if (button) {
+    event.preventDefault();
+    event.stopPropagation();
+    
+    const action = button.getAttribute('data-action');
+    switch (action) {
+      case 'beat-matching':
+        openBeatMatchingTrainer();
+        break;
+      case 'eq-trainer':
+        openEQTrainer();
+        break;
+      case 'effects-trainer':
+        openEffectsTrainer();
+        break;
+    }
+    return;
+  }
+
+  // Обработка старых кнопок с onclick (для обратной совместимости)
+  const oldButton = event.target.closest('button[onclick]');
+  if (oldButton) {
+    event.preventDefault();
+    event.stopPropagation();
+    
+    const onclickText = oldButton.getAttribute('onclick');
+    if (onclickText) {
+      if (onclickText.includes('openBeatMatchingTrainer')) {
+        openBeatMatchingTrainer();
+      } else if (onclickText.includes('openEQTrainer')) {
+        openEQTrainer();
+      } else if (onclickText.includes('openEffectsTrainer')) {
+        openEffectsTrainer();
+      }
+    }
+  }
+};
+
+// Заменяем onclick атрибуты на data-атрибуты
+const processContentButtons = () => {
+  if (!store.currentLesson?.content) return;
+  
+  nextTick(() => {
+    const lessonContent = document.querySelector('.lesson-content');
+    if (!lessonContent) return;
+    
+    const buttons = lessonContent.querySelectorAll('button[onclick]');
+    buttons.forEach(button => {
+      const onclick = button.getAttribute('onclick');
+      if (onclick.includes('openBeatMatchingTrainer')) {
+        button.removeAttribute('onclick');
+        button.setAttribute('data-action', 'beat-matching');
+        button.classList.add('interactive-btn');
+      } else if (onclick.includes('openEQTrainer')) {
+        button.removeAttribute('onclick');
+        button.setAttribute('data-action', 'eq-trainer');
+        button.classList.add('interactive-btn');
+      } else if (onclick.includes('openEffectsTrainer')) {
+        button.removeAttribute('onclick');
+        button.setAttribute('data-action', 'effects-trainer');
+        button.classList.add('interactive-btn');
+      }
+    });
+  });
+};
 
 const extractImagesFromContent = () => {
   if (!store.currentLesson?.content) {
@@ -61,17 +169,6 @@ const navigateImage = (direction) => {
   }
 };
 
-const handleImageClick = (e) => {
-  if (e.target.tagName === 'IMG' && e.target.src && !e.target.src.startsWith('data:')) {
-    const index = Array.from(document.querySelectorAll('.lesson-content img'))
-      .filter(img => img.src && !img.src.startsWith('data:'))
-      .findIndex(img => img === e.target);
-    if (index !== -1) {
-      openImageModal(index);
-    }
-  }
-};
-
 const handleTouchStart = (e) => {
   touchStartX.value = e.changedTouches[0].screenX;
 };
@@ -86,23 +183,11 @@ const handleTouchEnd = (e) => {
   }
 };
 
-// Добавляем новое состояние для отображения тренажера
-const showBeatMatchingTrainer = ref(false);
-
-// Функция для показа тренажера
-const openBeatMatchingTrainer = () => {
-  showBeatMatchingTrainer.value = true;
-};
-
-// Функция для возврата к уроку
-const closeBeatMatchingTrainer = () => {
-  showBeatMatchingTrainer.value = false;
-};
-
 onMounted(() => {
   store.fetchChapters().then(() => {
     isLoading.value = false;
     extractImagesFromContent();
+    processContentButtons();
   });
 });
 
@@ -110,6 +195,13 @@ watch(
   () => store.currentLesson,
   () => {
     extractImagesFromContent();
+    // Закрываем все тренажеры при смене урока
+    closeTrainer();
+    
+    // Обрабатываем кнопки после обновления контента
+    nextTick(() => {
+      processContentButtons();
+    });
   }
 );
 </script>
@@ -119,9 +211,11 @@ watch(
     <div v-if="isLoading" class="loading">
       <UiTypography variant="h3">Загрузка...</UiTypography>
     </div>
+    
+    <!-- Тренажер Beat Matching -->
     <div v-if="showBeatMatchingTrainer" class="trainer-overlay">
       <div class="trainer-header">
-        <UiButton @click="closeBeatMatchingTrainer" variant="secondary">
+        <UiButton @click="closeTrainer" variant="secondary">
           ← Назад к уроку
         </UiButton>
         <UiTypography variant="h2">Beat Matching Тренажер</UiTypography>
@@ -129,12 +223,42 @@ watch(
       <BeatMatchingTrainer />
     </div>
 
-    <div v-else-if="!isLoading && store.currentLesson" class="lesson-content" @click="handleImageClick">
+    <!-- Тренажер Эквалайзера -->
+    <div v-else-if="showEQTrainer" class="trainer-overlay">
+      <div class="trainer-header">
+        <UiButton @click="closeTrainer" variant="secondary">
+          ← Назад к уроку
+        </UiButton>
+        <UiTypography variant="h2">🎛️ Тренажер Эквалайзера</UiTypography>
+      </div>
+      <EQTrainer />
+    </div>
+
+    <!-- Тренажер Эффектов -->
+    <div v-else-if="showEffectsTrainer" class="trainer-overlay">
+      <div class="trainer-header">
+        <UiButton @click="closeTrainer" variant="secondary">
+          ← Назад к уроку
+        </UiButton>
+        <UiTypography variant="h2">🎛️ Тренажер Эффектов</UiTypography>
+      </div>
+      <EffectsTrainer />
+    </div>
+
+    <!-- Основной контент урока -->
+    <div 
+      v-else-if="!isLoading && store.currentLesson" 
+      class="lesson-content" 
+      @click="handleContentClick"
+    >
       <UiTypography variant="h2">{{ store.currentLesson.title }}</UiTypography>
       <UiTypography variant="body1" class="lesson-number">
         {{ lessonText }} {{ currentLessonIndex }} из {{ store.currentChapter?.Lessons?.length }}
       </UiTypography>
+      
       <div v-html="store.currentLesson.content"></div>
+      
+      <!-- Практические секции для разных уроков -->
       <div v-if="[6, 11].includes(store.currentLesson.id)" class="practice-section">
         <UiTypography variant="h3">🎵 Практическое задание</UiTypography>
         <UiButton @click="openBeatMatchingTrainer" variant="primary" size="large">
@@ -142,12 +266,30 @@ watch(
         </UiButton>
         <p>Потренируйтесь синхронизировать биты двух треков с разным BPM</p>
       </div>
+      
+      <div v-else-if="[17, 18].includes(store.currentLesson.id)" class="practice-section">
+        <UiTypography variant="h3">🎛️ Практическое задание</UiTypography>
+        <UiButton @click="openEQTrainer" variant="primary" size="large">
+          📊 Открыть Тренажер Эквалайзера
+        </UiButton>
+        <p>Изучите работу эквалайзера на практике с визуализацией спектра</p>
+      </div>
+      
+      <div v-else-if="[19, 20].includes(store.currentLesson.id)" class="practice-section">
+        <UiTypography variant="h3">🎧 Практическое задание</UiTypography>
+        <UiButton @click="openEffectsTrainer" variant="primary" size="large">
+          🔥 Открыть Тренажер Эффектов
+        </UiButton>
+        <p>Экспериментируйте с фильтрами, эхо и реверберацией в реальном времени</p>
+      </div>
+      
       <audio
         v-if="store.currentLesson.audioExample"
         :src="store.currentLesson.audioExample"
         controls
         class="audio-player"
       ></audio>
+      
       <UiButton
         v-if="store.hasNextLesson || store.hasNextChapter"
         variant="primary"
@@ -156,10 +298,12 @@ watch(
         {{ nextLessonText }}
       </UiButton>
     </div>
+    
     <div v-else class="error">
       <UiTypography variant="h3">Урок не найден</UiTypography>
     </div>
 
+    <!-- Модальное окно для изображений -->
     <div v-if="showImageModal" class="image-modal" @touchstart="handleTouchStart" @touchend="handleTouchEnd">
       <transition name="slide">
         <div class="modal-content" :key="currentImageIndex">
@@ -313,6 +457,80 @@ watch(
   border-left: 4px solid var(--primary-light);
 }
 
+:deep(.eq-table) {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+  background: var(--background);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+:deep(.eq-table th) {
+  background: var(--primary-medium);
+  color: var(--text-light);
+  padding: 12px;
+  text-align: left;
+  font-weight: 600;
+}
+
+:deep(.eq-table td) {
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--neutral-medium);
+}
+
+:deep(.eq-table tr:hover) {
+  background: var(--background-light);
+}
+
+:deep(.exercise) {
+  background: var(--background);
+  padding: 20px;
+  border-radius: 8px;
+  border: 2px solid var(--primary-light);
+  margin: 20px 0;
+}
+
+:deep(.exercise h4) {
+  color: var(--primary-dark);
+  margin-bottom: 15px;
+}
+
+:deep(.interactive-btn) {
+  background: linear-gradient(135deg, var(--primary-light), var(--primary-medium-dark));
+  color: var(--text-light);
+  border: none;
+  padding: 12px 24px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  margin: 10px 0;
+  display: inline-block;
+  text-decoration: none;
+}
+
+:deep(.interactive-btn:hover) {
+  transform: translateY(-2px);
+  background: linear-gradient(135deg, var(--primary-medium), var(--primary-dark));
+  box-shadow: 0 6px 12px var(--shadow);
+}
+
+:deep(.interactive-section) {
+  background: var(--background);
+  padding: 20px;
+  border-radius: 8px;
+  border-left: 4px solid var(--primary-light);
+  margin: 25px 0;
+  text-align: center;
+}
+
+:deep(.interactive-section h4) {
+  color: var(--primary-dark);
+  margin-bottom: 15px;
+}
+
 .image-modal {
   position: fixed;
   top: 0;
@@ -457,9 +675,39 @@ watch(
   padding: 20px;
   background: var(--primary-dark);
   color: var(--text-light);
+  position: sticky;
+  top: 0;
+  z-index: 1001;
 }
 
 .trainer-header button {
   margin-right: auto;
+}
+
+@media (max-width: 768px) {
+  .lesson-view {
+    margin: 60px auto 10px;
+    padding: 0 10px;
+  }
+  
+  .lesson-content {
+    padding: 20px;
+  }
+  
+  .trainer-header {
+    flex-direction: column;
+    gap: 10px;
+    text-align: center;
+  }
+  
+  .trainer-header button {
+    margin-right: 0;
+    align-self: flex-start;
+  }
+  
+  :deep(.interactive-btn) {
+    padding: 10px 20px;
+    font-size: 14px;
+  }
 }
 </style>

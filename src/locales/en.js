@@ -412,6 +412,228 @@ const chaptersData = [
             }
         ],
     },
+    {
+        id: 5,
+        title: 'EQ and Effects Mastery',
+        Lessons: [
+            {
+                id: 17,
+                title: 'EQ Fundamentals in DJing',
+                content: `
+                    <h3>What is EQ and Why is it Important?</h3>
+                    <p>Equalizer (EQ) is a tool for adjusting frequency balance in audio signals. In DJing, EQ is used for:</p>
+                    
+                    <div class="mixing-techniques">
+                        <div class="technique">
+                            <h4>🎵 Harmonic Mixing</h4>
+                            <p>Remove conflicting frequencies between tracks</p>
+                        </div>
+                        <div class="technique">
+                            <h4>🔊 Energy Control</h4>
+                            <p>Boost or cut specific frequency ranges</p>
+                        </div>
+                        <div class="technique">
+                            <h4>🎨 Creative Expression</h4>
+                            <p>Create unique sounding mixes</p>
+                        </div>
+                    </div>
+                    
+                    <h3>Frequency Ranges:</h3>
+                    <ul>
+                        <li><strong>Sub Bass (20-60Hz):</strong> Very low frequencies felt physically</li>
+                        <li><strong>Bass (60-250Hz):</strong> Fundamental bass frequencies, track foundation</li>
+                        <li><strong>Low Mids (250-500Hz):</strong> "Muddy" frequencies often need correction</li>
+                        <li><strong>Mids (500Hz-2kHz):</strong> Main instruments and vocals</li>
+                        <li><strong>High Mids (2-6kHz):</strong> Attack and clarity</li>
+                        <li><strong>Highs (6-20kHz):</strong> Air, sparkle and space</li>
+                    </ul>
+                    
+                    <div class="interactive-section">
+                        <h4>🎯 Practice with EQ!</h4>
+                        <p>Use our interactive trainer to understand how EQ works:</p>
+                        <button onclick="window.openEQTrainer()" class="interactive-btn">
+                            Open EQ Trainer
+                        </button>
+                    </div>
+                `,
+                audioExample: '/audio/eq-basics.mp3',
+            },
+            {
+                id: 18,
+                title: 'Practical EQ Techniques',
+                content: `
+                    <h3>Golden Rules of EQ Usage:</h3>
+                    
+                    <div class="mixing-techniques">
+                        <div class="technique">
+                            <h4>📉 Subtract, Don't Add</h4>
+                            <p>Better to remove problematic frequencies than add missing ones</p>
+                        </div>
+                        <div class="technique">
+                            <h4>🎛️ Moderation</h4>
+                            <p>±3dB changes are usually sufficient</p>
+                        </div>
+                        <div class="technique">
+                            <h4>👂 Listen in Context</h4>
+                            <p>Always check changes in the context of the full mix</p>
+                        </div>
+                    </div>
+                    
+                    <h3>Common Problems and Solutions:</h3>
+                    <table class="eq-table">
+                        <thead>
+                            <tr>
+                                <th>Problem</th>
+                                <th>Frequency Range</th>
+                                <th>Solution</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Muddy Sound</td>
+                                <td>200-500Hz</td>
+                                <td>Cut 2-4dB</td>
+                            </tr>
+                            <tr>
+                                <td>Harsh Sound</td>
+                                <td>2-5kHz</td>
+                                <td>Cut 1-3dB</td>
+                            </tr>
+                            <tr>
+                                <td>Lack of Bass</td>
+                                <td>60-120Hz</td>
+                                <td>Boost 2-3dB</td>
+                            </tr>
+                            <tr>
+                                <td>No Clarity</td>
+                                <td>5-8kHz</td>
+                                <td>Boost 1-2dB</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    
+                    <h3>EQ Sweeping Technique:</h3>
+                    <ol>
+                        <li>Create a narrow boost band (+6-8dB)</li>
+                        <li>Slowly "sweep" through the frequency range</li>
+                        <li>Find problematic frequencies (sound unpleasant)</li>
+                        <li>Cut the found frequencies by 2-4dB</li>
+                    </ol>
+                    
+                    <div class="video-wrapper">
+                        <iframe width="560" height="315" src="https://www.youtube.com/embed/mPKMHdU6T8A?si=9vZz7LcF6vMpVJfC" title="EQ Techniques" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                    </div>
+                `,
+                audioExample: '/audio/eq-techniques.mp3',
+            },
+            {
+                id: 19,
+                title: 'Effects: Filters, Echo and Reverb',
+                content: `
+                    <h3>Creative Use of Effects in DJing</h3>
+                    
+                    <div class="mixing-techniques">
+                        <div class="technique">
+                            <h4>🔧 Filters</h4>
+                            <p>Smooth frequency spectrum changes for tension and release</p>
+                        </div>
+                        <div class="technique">
+                            <h4>🔁 Echo/Delay</h4>
+                            <p>Sound repetition with delay for space and rhythm creation</p>
+                        </div>
+                        <div class="technique">
+                            <h4>🏛️ Reverb</h4>
+                            <p>Room acoustics simulation for depth addition</p>
+                        </div>
+                    </div>
+                    
+                    <h3>Practical Filter Applications:</h3>
+                    <ul>
+                        <li><strong>Low Pass Filter:</strong> Smoothly removes high frequencies - perfect for breakdowns</li>
+                        <li><strong>High Pass Filter:</strong> Removes low frequencies - creates "lift" sensation</li>
+                        <li><strong>Filter Sweep:</strong> Smooth cutoff frequency change for dramatic transitions</li>
+                    </ul>
+                    
+                    <h3>Echo Effect Settings:</h3>
+                    <div class="controller-layout">
+                        <div class="features">
+                            <h4>Key Parameters:</h4>
+                            <ul>
+                                <li><strong>Time:</strong> Time between repetitions (sync with BPM!)</li>
+                                <li><strong>Feedback:</strong> Number of repetitions</li>
+                                <li><strong>Mix:</strong> Balance between dry sound and effect</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="interactive-section">
+                        <h4>🎧 Experiment with Effects!</h4>
+                        <p>Try different settings in our effects trainer:</p>
+                        <button onclick="window.openEffectsTrainer()" class="interactive-btn">
+                            Open Effects Trainer
+                        </button>
+                    </div>
+                    
+                    <div class="note">
+                        <p><strong>Tip:</strong> Always use effects moderately! Too many effects can ruin a mix.</p>
+                    </div>
+                `,
+                audioExample: '/audio/effects-basics.mp3',
+            },
+            {
+                id: 20,
+                title: 'Advanced Effects Techniques',
+                content: `
+                    <h3>Creating Professional Transitions with Effects</h3>
+                    
+                    <h3>"Echo Out" Technique:</h3>
+                    <ol>
+                        <li>16 bars before track end, enable echo effect</li>
+                        <li>Set delay time to 1/4 or 1/8 of tempo</li>
+                        <li>Gradually increase effect level</li>
+                        <li>At transition point, mute original track leaving only echo</li>
+                        <li>Smoothly remove effect on the next track</li>
+                    </ol>
+                    
+                    <h3>Using Reverb for Transitions:</h3>
+                    <ul>
+                        <li><strong>Short Room:</strong> For fast transitions and energy addition</li>
+                        <li><strong>Hall:</strong> For dramatic, epic transitions</li>
+                        <li><strong>Plate:</strong> For vocals and creating "shimmering" effect</li>
+                    </ul>
+                    
+                    <h3>Effect Combinations:</h3>
+                    <div class="mixing-techniques">
+                        <div class="technique">
+                            <h4>Filter + Echo</h4>
+                            <p>Apply low pass filter to echo for "underwater" sound</p>
+                        </div>
+                        <div class="technique">
+                            <h4>Reverb + Delay</h4>
+                            <p>Add slight delay to reverb for more rhythmic space</p>
+                        </div>
+                    </div>
+                    
+                    <h3>Practical Exercise:</h3>
+                    <div class="exercise">
+                        <h4>🎯 Create a Transition Using Effects:</h4>
+                        <ol>
+                            <li>Choose two compatible tracks</li>
+                            <li>Start with high pass filter on outgoing track</li>
+                            <li>Add echo effect on last 8 bars</li>
+                            <li>Use reverb to "smooth" the transition</li>
+                            <li>Practice until achieving smooth result</li>
+                        </ol>
+                    </div>
+                    
+                    <div class="video-wrapper">
+                        <iframe width="560" height="315" src="https://www.youtube.com/embed/V1KZeG7whis?si=3Lw2K3JQz3vq3pzX" title="Advanced Effects" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                    </div>
+                `,
+                audioExample: '/audio/advanced-effects.mp3',
+            }
+        ],
+    }
 ];
 
 module.exports = chaptersData;

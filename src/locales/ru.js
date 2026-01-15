@@ -416,6 +416,228 @@ const chaptersData = [
             }
         ],
     },
+    {
+      id: 5,
+      title: 'Работа с эквалайзером и эффектами',
+      Lessons: [
+          {
+              id: 17,
+              title: 'Основы эквалайзера в диджеинге',
+              content: `
+                  <h3>Что такое эквалайзер и зачем он нужен?</h3>
+                  <p>Эквалайзер (EQ) - это инструмент для регулировки баланса частот в аудиосигнале. В диджеинге EQ используется для:</p>
+                  
+                  <div class="mixing-techniques">
+                      <div class="technique">
+                          <h4>🎵 Гармоничного сведения</h4>
+                          <p>Убираем конфликтующие частоты между треками</p>
+                      </div>
+                      <div class="technique">
+                          <h4>🔊 Контроля энергии</h4>
+                          <p>Усиливаем или ослабляем определенные диапазоны</p>
+                      </div>
+                      <div class="technique">
+                          <h4>🎨 Творческого подхода</h4>
+                          <p>Создаем уникальное звучание микса</p>
+                      </div>
+                  </div>
+                  
+                  <h3>Частотные диапазоны:</h3>
+                  <ul>
+                      <li><strong>Sub Bass (20-60Hz):</strong> Очень низкие частоты, которые ощущаются телом</li>
+                      <li><strong>Bass (60-250Hz):</strong> Основные басовые частоты, фундамент трека</li>
+                      <li><strong>Low Mids (250-500Hz):</strong> "Мутные" частоты, часто требуют коррекции</li>
+                      <li><strong>Mids (500Hz-2kHz):</strong> Основные инструменты и вокал</li>
+                      <li><strong>High Mids (2-6kHz):</strong> Атака и четкость звучания</li>
+                      <li><strong>Highs (6-20kHz):</strong> Воздух, блеск и пространство</li>
+                  </ul>
+                  
+                  <div class="interactive-section">
+                      <h4>🎯 Практикуйтесь с эквалайзером!</h4>
+                      <p>Используйте наш интерактивный тренажер чтобы понять как работает EQ:</p>
+                      <button onclick="window.openEQTrainer()" class="interactive-btn">
+                          Открыть Тренажер Эквалайзера
+                      </button>
+                  </div>
+              `,
+              audioExample: '/audio/eq-basics.mp3',
+          },
+          {
+            id: 18,
+            title: 'Практические техники работы с EQ',
+            content: `
+                <h3>Золотые правила работы с эквалайзером:</h3>
+                
+                <div class="mixing-techniques">
+                    <div class="technique">
+                        <h4>📉 Вычитание, а не сложение</h4>
+                        <p>Лучше убирать лишние частоты, чем добавлять недостающие</p>
+                    </div>
+                    <div class="technique">
+                        <h4>🎛️ Умеренность</h4>
+                        <p>Изменения в ±3dB обычно достаточно</p>
+                    </div>
+                    <div class="technique">
+                        <h4>👂 Слушайте контекст</h4>
+                        <p>Всегда проверяйте изменения в контексте всего микса</p>
+                    </div>
+                </div>
+                
+                <h3>Типичные проблемы и решения:</h3>
+                <table class="eq-table">
+                    <thead>
+                        <tr>
+                            <th>Проблема</th>
+                            <th>Частотный диапазон</th>
+                            <th>Решение</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Мутный звук</td>
+                            <td>200-500Hz</td>
+                            <td>Убрать 2-4dB</td>
+                        </tr>
+                        <tr>
+                            <td>Резкий звук</td>
+                            <td>2-5kHz</td>
+                            <td>Убрать 1-3dB</td>
+                        </tr>
+                        <tr>
+                            <td>Недостаток баса</td>
+                            <td>60-120Hz</td>
+                            <td>Добавить 2-3dB</td>
+                        </tr>
+                        <tr>
+                            <td>Нет четкости</td>
+                            <td>5-8kHz</td>
+                            <td>Добавить 1-2dB</td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                <h3>Техника "EQ-свипирования":</h3>
+                <ol>
+                    <li>Создайте узкую полосу усиления (+6-8dB)</li>
+                    <li>Медленно "просканируйте" частотный диапазон</li>
+                    <li>Найдите проблемные частоты (звучат неприятно)</li>
+                    <li>Ослабьте найденные частоты на 2-4dB</li>
+                </ol>
+                
+                <div class="video-wrapper">
+                    <iframe width="560" height="315" src="https://www.youtube.com/embed/mPKMHdU6T8A?si=9vZz7LcF6vMpVJfC" title="EQ Techniques" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                </div>
+            `,
+            audioExample: '/audio/eq-techniques.mp3',
+        },
+        {
+            id: 19,
+            title: 'Эффекты: Фильтры, Эхо и Реверберация',
+            content: `
+                <h3>Творческое использование эффектов в диджеинге</h3>
+                
+                <div class="mixing-techniques">
+                    <div class="technique">
+                        <h4>🔧 Фильтры</h4>
+                        <p>Плавное изменение частотного спектра для создания напряжения и релиза</p>
+                    </div>
+                    <div class="technique">
+                        <h4>🔁 Эхо/Дилей</h4>
+                        <p>Повторение звука с задержкой для создания пространства и ритма</p>
+                    </div>
+                    <div class="technique">
+                        <h4>🏛️ Реверберация</h4>
+                        <p>Имитация акустики помещений для добавления глубины</p>
+                    </div>
+                </div>
+                
+                <h3>Практическое применение фильтров:</h3>
+                <ul>
+                    <li><strong>Low Pass Filter:</strong> Плавно убирает высокие частоты - идеально для брейкдаунов</li>
+                    <li><strong>High Pass Filter:</strong> Убирает низкие частоты - создает ощущение "подъема"</li>
+                    <li><strong>Filter Sweep:</strong> Плавное изменение частоты среза для драматических переходов</li>
+                </ul>
+                
+                <h3>Настройка эхо-эффектов:</h3>
+                <div class="controller-layout">
+                    <div class="features">
+                        <h4>Ключевые параметры:</h4>
+                        <ul>
+                            <li><strong>Time:</strong> Время между повторениями (синхронизируйте с BPM!)</li>
+                            <li><strong>Feedback:</strong> Количество повторений</li>
+                            <li><strong>Mix:</strong> Баланс между исходным звуком и эффектом</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="interactive-section">
+                    <h4>🎧 Экспериментируйте с эффектами!</h4>
+                    <p>Попробуйте различные настройки в нашем тренажере эффектов:</p>
+                    <button onclick="window.openEffectsTrainer()" class="interactive-btn">
+                        Открыть Тренажер Эффектов
+                    </button>
+                </div>
+                
+                <div class="note">
+                    <p><strong>Совет:</strong> Всегда используйте эффекты умеренно! Слишком много эффектов может испортить микс.</p>
+                </div>
+            `,
+            audioExample: '/audio/effects-basics.mp3',
+        },
+        {
+            id: 20,
+            title: 'Продвинутые техники эффектов',
+            content: `
+                <h3>Создание профессиональных переходов с помощью эффектов</h3>
+                
+                <h3>Техника "Echo Out":</h3>
+                <ol>
+                    <li>За 16 тактов до конца трека включите эхо-эффект</li>
+                    <li>Установите время задержки в 1/4 или 1/8 от темпа</li>
+                    <li>Постепенно увеличивайте уровень эффекта</li>
+                    <li>В момент перехода выключите оригинальный трек, оставив только эхо</li>
+                    <li>Плавно уберите эффект на следующем треке</li>
+                </ol>
+                
+                <h3>Использование реверберации для переходов:</h3>
+                <ul>
+                    <li><strong>Short Room:</strong> Для быстрых переходов и добавления энергии</li>
+                    <li><strong>Hall:</strong> Для драматических, эпических переходов</li>
+                    <li><strong>Plate:</strong> Для вокала и создания "сияющего" эффекта</li>
+                </ul>
+                
+                <h3>Комбинирование эффектов:</h3>
+                <div class="mixing-techniques">
+                    <div class="technique">
+                        <h4>Фильтр + Эхо</h4>
+                        <p>Примените low pass фильтр к эхо-эффекту для создания "подводного" звучания</p>
+                    </div>
+                    <div class="technique">
+                        <h4>Реверб + Дилей</h4>
+                        <p>Добавьте небольшой дилей к реверберации для более ритмичного пространства</p>
+                    </div>
+                </div>
+                
+                <h3>Практическое упражнение:</h3>
+                <div class="exercise">
+                    <h4>🎯 Создайте переход с использованием эффектов:</h4>
+                    <ol>
+                        <li>Выберите два совместимых трека</li>
+                        <li>Начните с применения high pass фильтра к уходящему треку</li>
+                        <li>Добавьте эхо-эффект на последние 8 тактов</li>
+                        <li>Используйте реверберацию чтобы "сгладить" переход</li>
+                        <li>Практикуйтесь до достижения плавного результата</li>
+                    </ol>
+                </div>
+                
+                <div class="video-wrapper">
+                    <iframe width="560" height="315" src="https://www.youtube.com/embed/V1KZeG7whis?si=3Lw2K3JQz3vq3pzX" title="Advanced Effects" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                </div>
+            `,
+            audioExample: '/audio/advanced-effects.mp3',
+        }
+        ],
+      },
 ];
 
 module.exports = chaptersData;
